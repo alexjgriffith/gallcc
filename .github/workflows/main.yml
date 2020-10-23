@@ -9,9 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Update APT
-       run: sudo apt-get update
+        run: sudo apt-get update
       - name: Install Dependencies
-       run: sudo apt-get install --assume-yes liblua5.1-0-dev lua5.1-0 cmake
+        run: sudo apt-get install --assume-yes liblua5.1-0-dev lua5.1-0 cmake
       - name: Build Library
         run: |
           mkdir build &&
