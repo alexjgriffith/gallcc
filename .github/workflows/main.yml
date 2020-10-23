@@ -21,7 +21,7 @@ jobs:
       - name: Run Tests
         run: |
           cd tests
-          lua5.3 extralib/fennel run.fnl
+          lua5.1 extralib/fennel run.fnl
       - name: Artifact
         uses: actions/upload-artifact@v2-preview
         with:
