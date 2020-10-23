@@ -12,11 +12,18 @@ set(MAIN src/main.cpp)
 
 set(LIB src/sample.cpp)
 
+set(LOCAL_LUA .lua/lib/liblua.so)
+
 find_package(Lua51 REQUIRED)
 
-add_executable(sbin ${MAIN} ${SOURCES})
-target_link_libraries(sbin ${LUA_LIBRARIES})
+# add_executable(sbin ${MAIN} ${SOURCES})
+# target_link_libraries(sbin ${LUA_LIBRARIES})
 
 add_library(sample SHARED ${LIB} ${SOURCES})
-target_link_libraries(sample ${LUA_LIBRARIES})
+
+if(EXISTS "${ROOT}/${LOCAL_LUA}")
+  target_link_libraries(sample ${LOCAL_LUA} ${LOCAL_LUA})
+else()
+  target_link_libraries(sample ${LOCAL_LUA} ${LUA_LIBRARIES})
+endif()
 set_target_properties(sample PROPERTIES PREFIX "")
