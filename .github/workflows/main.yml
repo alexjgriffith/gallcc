@@ -21,27 +21,27 @@ jobs:
       - name: Run Tests
         run: |
           cd tests
-          lua extralib/fennel run.fnl
+          lua5.3 extralib/fennel run.fnl
       - name: Artifact
         uses: actions/upload-artifact@v2-preview
         with:
           name: sample.so
           path: build/sample.so
-  windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        platform: [Win32, x64]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: xpol/setup-lua@v0.2
-        with:
-          lua-version: "5.1.5"
-      - name: Configure
-        shell: cmd
-        env:
-          PLATFORM: ${{ matrix.platform }}
-        run: cmake -Bbuild -T v142 -A %PLATFORM% -DCMAKE_INSTALL_PREFIX=%CD%\install
-      - name: Install
-        shell: cmd
-        run: cmake --build build --config Release --target install -j2
+  # windows:
+  #   runs-on: windows-latest
+  #   strategy:
+  #     matrix:
+  #       platform: [Win32, x64]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: xpol/setup-lua@v0.2
+  #       with:
+  #         lua-version: "5.1.5"
+  #     - name: Configure
+  #       shell: cmd
+  #       env:
+  #         PLATFORM: ${{ matrix.platform }}
+  #       run: cmake -Bbuild -T v142 -A %PLATFORM% -DCMAKE_INSTALL_PREFIX=%CD%\install
+  #     - name: Install
+  #       shell: cmd
+  #       run: cmake --build build --config Release --target install -j2
