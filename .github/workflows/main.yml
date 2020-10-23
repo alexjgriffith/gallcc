@@ -38,7 +38,7 @@ jobs:
       - name: Run Tests
         run: |
           cd tests
-          lua5.1 extralibs/fennel run.fnl
+          .lua/bin/lua extralibs/fennel run.fnl
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
