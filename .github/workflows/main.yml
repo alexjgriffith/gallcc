@@ -26,6 +26,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Poke around in file
         run: |
+          pwd
           ls -alh *
       # Runs a single command using the runners shell
       - name: Build Library
