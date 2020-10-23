@@ -1,34 +1,17 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on: [push, pull_request]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  linux:
     runs-on: ubuntu-16.04 #target the oldest version supported
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - uses: xpol/setup-lua@v0.2
-        with:
-          lua-version: "5.1.5"
-      #- name: Update APT
-      #  run: sudo apt-get update
-      #- name: Install Dependencies
-      #  run: sudo apt-get install --assume-yes liblua5.1-0-dev lua5.1-0 cmake
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Poke around in file
-        run: |
-          pwd
-          ls -alh *
-      # Runs a single command using the runners shell
+      - name: Update APT
+       run: sudo apt-get update
+      - name: Install Dependencies
+       run: sudo apt-get install --assume-yes liblua5.1-0-dev lua5.1-0 cmake
       - name: Build Library
         run: |
           mkdir build &&
@@ -39,8 +22,26 @@ jobs:
         run: |
           cd tests
           lua extralib/fennel run.fnl
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Artifact
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: sample.so
+          path: build/sample.so
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: [Win32, x64]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: xpol/setup-lua@v0.2
+        with:
+          lua-version: "5.1.5"
+      - name: Configure
+        shell: cmd
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: cmake -Bbuild -T v142 -A %PLATFORM% -DCMAKE_INSTALL_PREFIX=%CD%\install
+      - name: Install
+        shell: cmd
+        run: cmake --build build --config Release --target install -j2
