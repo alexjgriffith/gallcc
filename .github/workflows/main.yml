@@ -26,8 +26,8 @@ jobs:
         with:
           lua-version: "5.1.5"
       - name: Poke around in file
-        run: | ls && ls *
-
+        run: |
+          ls && ls *
       # Runs a single command using the runners shell
       - name: Build Library
         run: |
