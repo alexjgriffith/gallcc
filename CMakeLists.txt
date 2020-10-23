@@ -19,7 +19,7 @@ add_library(sample SHARED ${LIB} ${SOURCES})
 set_target_properties(sample PROPERTIES PREFIX "")
 
 
-if(EXISTS "${ROOT}/.lua/lib/")
+if(EXISTS "${ROOT}/.lua/lib/liblua.so")
   set(LOCAL_LUA_LIBARAY .lua/lib/liblua.so)
   set(LOCAL_LUA_INCLUDE .lua/include/)
   include_directories(${INCLUDE_DIRECTORIES} ${LOCAL_LUA_INCLDUE})
