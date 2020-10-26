@@ -41,26 +41,26 @@ jobs:
         with:
           name: sample.dylib
           path: build/Release/sample.dylib
-  # windows:
-  #   runs-on: windows-latest
-  #   strategy:
-  #     matrix:
-  #       platform: [Win32, x64]
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: xpol/setup-lua@v0.2
-  #       with:
-  #         lua-version: "5.1.5"
-  #     - name: Configure
-  #       shell: cmd
-  #       env:
-  #         PLATFORM: ${{ matrix.platform }}
-  #       run: cmake -Bbuild -T v142 -A %PLATFORM%
-  #     - name: Install
-  #       shell: cmd
-  #       run: cmake --build build --config Release -j2
-  #     - name: Artifact
-  #       uses: actions/upload-artifact@v2-preview
-  #       with:
-  #         name: sample.dll
-  #         path: build/Release/sample.dll
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: [Win32, x64]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: xpol/setup-lua@v0.2
+        with:
+          lua-version: "5.1.5"
+      - name: Configure
+        shell: cmd
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: cmake -Bbuild -T v142 -A %PLATFORM%
+      - name: Install
+        shell: cmd
+        run: cmake --build build -j2
+      - name: Artifact
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: sample_%PLATFORM%.dll
+          path: build/Release/sample.dll
