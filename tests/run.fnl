@@ -1,8 +1,8 @@
-(tset package :cpath (.. package.cpath ";../build/?.so"))
+(tset package :cpath (.. package.cpath ";build/?.so;build/Release/?.so;build/Release/?.dylib; build/Release/?.dll"))
 
 (local sample (require "sample"))
 
-(local pp (fn [x] (print ((require :extralib.fennelview) x))))
+(local pp (fn [x] (print ((require :tests.extralib.fennelview) x))))
 
 (local input-obj {:text "name" :height 1 :strength 2})
 
