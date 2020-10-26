@@ -23,7 +23,7 @@ else()
   message("Only supports Linux, Macos and Windows.")
 endif()
 
-find_package(Lua51 OPTIONAL)
+find_package(Lua51)
 if(NOT LUA51_FOUND)
   message("Using local lua library in .lua/lib/")
   set(LUA_LIBRARIES "${PROJECT_SOURCE_DIR}/${LOCAL_LUA_LIBRARY_LOCATION}")
