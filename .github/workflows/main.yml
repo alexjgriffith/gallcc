@@ -35,7 +35,7 @@ jobs:
       - name: Install
         run: cmake --build build --config Release -j2
       - name: Run Tests
-        run: lua5.1 tests/extralib/fennel tests/run.fnl
+        run: .lua/bin/lua tests/extralib/fennel tests/run.fnl
       - name: Artifact
         uses: actions/upload-artifact@v2-preview
         with:
